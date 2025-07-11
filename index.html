@@ -1,314 +1,340 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Landingpage mit rundem Spezial-Cursor</title>
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-    body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "San Francisco", Arial, sans-serif;
-      background: #111;
-      color: #eee;
-      line-height: 1.5;
-      cursor: none;
-    }
-    a {
-      color: #ccc;
-      text-decoration: none;
-      cursor: none;
-    }
-    a:hover {
-      color: #aaa;
-      text-decoration: underline;
-    }
-    button, input, textarea, select {
-      cursor: none;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Landingpage mit rundem Spezial-Cursor</title>
+<style>
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "San Francisco", Arial, sans-serif;
+    background: #111;
+    color: #eee;
+    line-height: 1.5;
+    cursor: none;
+  }
+  a {
+    color: #ccc;
+    text-decoration: none;
+    cursor: none;
+  }
+  a:hover {
+    color: #aaa;
+    text-decoration: underline;
+  }
+  button, input, textarea, select {
+    cursor: none;
+  }
 
+  header {
+    position: sticky;
+    top: 0;
+    background: rgba(17, 17, 17, 0.95);
+    height: 48px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.7);
+    z-index: 1000;
+    padding: 0 20px;
+    justify-content: space-between;
+    position: relative;
+  }
+
+  /* Hamburger Menu */
+  #hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 25px;
+    height: 20px;
+    cursor: pointer;
+    z-index: 1100;
+  }
+  #hamburger div {
+    width: 100%;
+    height: 3px;
+    background-color: #ccc;
+    border-radius: 2px;
+    transition: background-color 0.3s;
+  }
+  #hamburger:focus {
+    outline: 2px solid #0a84ff;
+    outline-offset: 2px;
+  }
+
+  /* Logo absolute zentriert */
+  .logo {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    height: 28px;
+    display: flex;
+    align-items: center;
+  }
+  .logo img {
+    height: 28px;
+    width: auto;
+    display: block;
+  }
+
+  nav.desktop-nav {
+    display: flex;
+    gap: 30px;
+    font-size: 14px;
+  }
+  nav.desktop-nav ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  nav.desktop-nav a {
+    display: block;
+    padding: 6px 4px;
+    color: #ccc;
+    transition: color 0.3s, transform 0.2s;
+    white-space: nowrap;
+  }
+  nav.desktop-nav a:hover,
+  nav.desktop-nav a:focus {
+    color: #aaa;
+    transform: translateY(-2px);
+  }
+
+  /* Menü links, Seitenbezeichnung rechts */
+  nav.menu-left {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+  }
+
+  .page-indicator {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.4);
+    text-transform: uppercase;
+    padding: 4px 10px;
+    letter-spacing: 1px;
+    user-select: none;
+    white-space: nowrap;
+  }
+
+  .hero-image {
+    width: 100vw;
+    height: 900px;
+    background: url('https://picsum.photos/1600/600?grayscale&blur=3') center center / cover no-repeat;
+  }
+
+  .banner {
+    max-width: 1650px;
+    margin: 90px auto 60px;
+    display: flex;
+    justify-content: center;
+    gap: 90px;
+    color: #fff;
+  }
+  .banner .item {
+    width: 230px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .banner .number {
+    font-size: 3.15rem; /* ca. 40% kleiner */
+    font-weight: 700;
+    color: #fff;
+    line-height: 1;
+  }
+  .banner .label {
+    margin-top: 12px;
+    font-size: 0.875rem; /* Wie Footer-Links */
+    color: #ccc;
+    max-width: 230px;
+    white-space: normal;
+  }
+
+  footer {
+    background: #111;
+    color: #888;
+    font-size: 14px;
+    padding: 40px 20px;
+    border-top: 1px solid #222;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    align-items: flex-start;
+    max-width: 1650px;
+    margin: 0 auto 30px;
+  }
+  footer .footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 12px;
+    width: 100%;
+  }
+  footer .footer-links a {
+    color: #888;
+    cursor: none;
+    font-size: 14px;
+  }
+  footer .footer-links a:hover {
+    color: #aaa;
+    text-decoration: underline;
+  }
+  footer .footer-bottom {
+    width: 100%;
+    text-align: left;
+    color: #555;
+  }
+
+  /* Custom Cursor */
+  #custom-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 35px;
+    height: 35px;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid white;
+    border-radius: 50%;
+    color: white;
+    font-size: 6px;
+    font-weight: 100;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    user-select: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+    line-height: 1.1;
+  }
+  #custom-cursor span {
+    line-height: 1.1;
+  }
+
+  /* Mobile Styles */
+  @media (max-width: 768px) {
     header {
-      position: sticky;
-      top: 0;
-      background: rgba(17, 17, 17, 0.95);
-      height: 48px;
-      display: flex;
-      align-items: center;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.7);
-      z-index: 1000;
-      padding: 0 20px;
-      justify-content: space-between;
+      padding: 0 10px;
     }
-
-    /* Hamburger Menu */
     #hamburger {
-      display: none;
-      flex-direction: column;
-      justify-content: space-around;
-      width: 25px;
-      height: 20px;
-      cursor: pointer;
-    }
-    #hamburger div {
-      width: 100%;
-      height: 3px;
-      background-color: #ccc;
-      border-radius: 2px;
-      transition: background-color 0.3s;
-    }
-    #hamburger:focus {
-      outline: 2px solid #0a84ff;
-      outline-offset: 2px;
-    }
-
-    .logo {
-      flex-shrink: 0;
       display: flex;
-      align-items: center;
-      justify-content: center;
-      flex: 1;
     }
-    .logo img {
-      height: 28px;
-      width: auto;
-      display: block;
-    }
-
     nav.desktop-nav {
-      flex: 2;
-      display: flex;
-      justify-content: center;
-    }
-    nav.desktop-nav ul {
-      list-style: none;
-      display: flex;
-      gap: 30px;
-      margin: 0;
-      padding: 0;
-      font-size: 14px;
-    }
-    nav.desktop-nav a {
-      display: block;
-      padding: 6px 4px;
-      color: #ccc;
-      transition: color 0.3s, transform 0.2s;
-      white-space: nowrap;
-    }
-    nav.desktop-nav a:hover,
-    nav.desktop-nav a:focus {
-      color: #aaa;
-      transform: translateY(-2px);
+      display: none;
     }
 
-    /* Page indicator rechts */
+    /* Mobile header flex layout with hamburger left, logo centered, page indicator right */
+    header {
+      justify-content: space-between;
+      position: relative;
+    }
+    #hamburger {
+      order: 1;
+      position: relative;
+      z-index: 1100;
+    }
+    .logo {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1100;
+    }
     .page-indicator {
-      flex-shrink: 0;
+      order: 3;
+      flex: 0 0 auto;
       font-size: 12px;
-      color: rgba(255, 255, 255, 0.4);
-      text-transform: uppercase;
       padding: 4px 10px;
-      letter-spacing: 1px;
+      color: rgba(255,255,255,0.4);
       user-select: none;
       white-space: nowrap;
     }
 
-    .hero-image {
-      width: 100vw;
-      height: 900px;
-      background: url('https://picsum.photos/1600/600?grayscale&blur=3') center center / cover no-repeat;
+    /* Mobile Nav Menü (ausgeklappt) */
+    nav.mobile-nav ul {
+      list-style: none;
+      padding: 20px;
+      margin: 0;
+      background: rgba(17, 17, 17, 0.95);
+      position: absolute;
+      top: 48px;
+      left: 0;
+      width: 100%;
+      z-index: 9999;
+      flex-direction: column;
+      display: none;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.7);
+    }
+    nav.mobile-nav ul.show {
+      display: flex;
+    }
+    nav.mobile-nav ul li {
+      margin-bottom: 12px;
+    }
+    nav.mobile-nav ul li a {
+      color: #ccc;
+      text-decoration: none;
+      font-size: 18px;
+    }
+    nav.mobile-nav ul li a:hover {
+      color: #aaa;
     }
 
+    /* Banner kompakter & nebeneinander */
     .banner {
-      max-width: 1650px;
-      margin: 90px auto 60px;
-      display: flex;
+      flex-direction: row;
       justify-content: center;
-      gap: 90px;
-      color: #fff;
+      gap: 20px;
+      margin: 40px 10px;
     }
     .banner .item {
-      width: 230px;
+      max-width: 100px;
+      margin: 0;
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
     }
     .banner .number {
-      font-size: 5.25rem;
-      font-weight: 700;
-      color: #fff;
-      line-height: 1;
+      font-size: 3.15rem; /* ca. 40% kleiner */
     }
     .banner .label {
-      margin-top: 12px;
-      font-size: 1.875rem;
-      color: #ccc;
-      max-width: 230px;
+      font-size: 0.875rem; /* Wie Footer-Links */
+      max-width: 100px;
       white-space: normal;
+      margin-top: 8px;
+      color: #ccc;
     }
 
+    /* Footer links linksbündig auch mobil */
     footer {
-      background: #111;
-      color: #888;
-      font-size: 14px;
-      padding: 40px 20px;
-      text-align: center;
-      border-top: 1px solid #222;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 12px;
+      padding: 30px 20px;
+      align-items: flex-start;
+      gap: 20px;
     }
     footer .footer-links {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 12px;
-    }
-    footer .footer-links a {
-      color: #888;
-      cursor: none;
-      font-size: 14px;
-    }
-    footer .footer-links a:hover {
-      color: #aaa;
-      text-decoration: underline;
+      flex-direction: row;
+      justify-content: flex-start;
+      gap: 16px;
+      width: 100%;
     }
     footer .footer-bottom {
+      text-align: left;
       width: 100%;
-      text-align: center;
-      margin-top: 12px;
+      color: #555;
     }
-
-    /* Custom Cursor */
-    #custom-cursor {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 35px;
-      height: 35px;
-      background: rgba(0, 0, 0, 0.5);
-      border: 1px solid white;
-      border-radius: 50%;
-      color: white;
-      font-size: 6px;
-      font-weight: 100;
-      font-family: Arial, sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      pointer-events: none;
-      user-select: none;
-      z-index: 9999;
-      transform: translate(-50%, -50%);
-      white-space: nowrap;
-      line-height: 1.1;
-    }
-    #custom-cursor span {
-      line-height: 1.1;
-    }
-
-    /* Mobile Styles */
-    @media (max-width: 768px) {
-      header {
-        padding: 0 10px;
-      }
-      #hamburger {
-        display: flex;
-      }
-      nav.desktop-nav {
-        display: none;
-      }
-
-      header {
-        justify-content: space-between;
-      }
-
-      .page-indicator {
-        order: 3;
-        flex: 0 0 auto;
-      }
-      #hamburger {
-        order: 1;
-      }
-      .logo {
-        order: 2;
-        justify-content: center;
-        flex: 1;
-      }
-
-      /* Mobile Nav Menü (ausgeklappt) */
-      nav.mobile-nav ul {
-        list-style: none;
-        padding: 20px;
-        margin: 0;
-        background: rgba(17, 17, 17, 0.95);
-        position: absolute;
-        top: 48px;
-        left: 0;
-        width: 100%;
-        z-index: 9999;
-        flex-direction: column;
-        display: none;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.7);
-      }
-      nav.mobile-nav ul.show {
-        display: flex;
-      }
-      nav.mobile-nav ul li {
-        margin-bottom: 12px;
-      }
-      nav.mobile-nav ul li a {
-        color: #ccc;
-        text-decoration: none;
-        font-size: 18px;
-      }
-      nav.mobile-nav ul li a:hover {
-        color: #aaa;
-      }
-
-      /* Banner kompakter & nebeneinander */
-      .banner {
-        flex-direction: row;
-        justify-content: center;
-        gap: 20px;
-        margin: 40px 10px;
-      }
-      .banner .item {
-        max-width: 100px;
-        margin: 0;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-      }
-      .banner .number {
-        font-size: 3.15rem; /* ca. 60% von 5.25rem */
-      }
-      .banner .label {
-        font-size: 0.875rem; /* Gleich wie Footer-Links */
-        max-width: 100px;
-        white-space: normal;
-        margin-top: 8px;
-        color: #ccc;
-      }
-
-      /* Footer links untereinander */
-      footer .footer-links {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
-      }
-
-      /* Mehr Platz zwischen Kontakt und Copyright */
-      footer {
-        gap: 24px; /* ca. doppelt so viel Abstand */
-      }
-    }
-  </style>
+  }
+</style>
 </head>
 <body>
 
@@ -323,7 +349,7 @@
     <img src="img/logo.png.png" alt="Firmenlogo" />
   </a>
 
-  <nav class="desktop-nav" aria-label="Hauptmenü">
+  <nav class="menu-left" aria-label="Hauptmenü">
     <ul>
       <li><a href="projekte.html">Unsere Projekte</a></li>
       <li><a href="leistungen.html">Unsere Leistungen</a></li>
@@ -348,16 +374,16 @@
 
 <div class="banner" aria-label="Statistik Banner">
   <div class="item" aria-live="polite">
-    <div class="number" aria-label="Mehr als 500 Kunden">500+</div>
-    <div class="label">Kunden</div>
+    <div class="number" data-target="100">0</div>
+    <div class="label">Prozent Kundenzufriedenheit</div>
   </div>
   <div class="item" aria-live="polite">
-    <div class="number" aria-label="Mehr als 6000 Quadratmeter Projektfläche">6000+</div>
-    <div class="label">Quadratmeter Projektfläche</div>
+    <div class="number" data-target="9">0</div>
+    <div class="label">Jahre Branchenerfahrung</div>
   </div>
   <div class="item" aria-live="polite">
-    <div class="number" aria-label="Mehr als 30 Jahre Erfahrung">30+</div>
-    <div class="label">Jahre Erfahrung</div>
+    <div class="number" data-target="67">0</div>
+    <div class="label">Abgeschlossene Projekte</div>
   </div>
 </div>
 
@@ -393,17 +419,17 @@
     }
   });
 
-  // Page indicator rechts im Header
+  // Page indicator rechts im Header (Deutsch)
   function updatePageIndicator() {
-    const path = window.location.pathname;
+    const path = window.location.pathname.toLowerCase();
     const pageMap = {
-      '/index.html': 'Home',
+      '/index.html': 'Startseite',
       '/projekte.html': 'Unsere Projekte',
       '/leistungen.html': 'Unsere Leistungen',
       '/ueberuns.html': 'Über uns',
       '/kontakt.html': 'Kontakt'
     };
-    const pageName = pageMap[path.toLowerCase()] || 'Home';
+    const pageName = pageMap[path] || 'Startseite';
     document.getElementById('page-indicator').textContent = pageName;
   }
   updatePageIndicator();
@@ -413,6 +439,22 @@
   window.addEventListener('mousemove', e => {
     cursor.style.left = e.clientX + 'px';
     cursor.style.top = e.clientY + 'px';
+  });
+
+  // Animate numbers in banner
+  const counters = document.querySelectorAll('.banner .number');
+  counters.forEach(counter => {
+    const target = +counter.getAttribute('data-target');
+    let count = 0;
+    const increment = target / 100;
+    const interval = setInterval(() => {
+      count += increment;
+      if (count >= target) {
+        count = target;
+        clearInterval(interval);
+      }
+      counter.textContent = Math.floor(count);
+    }, 20);
   });
 </script>
 
