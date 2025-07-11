@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Landingpage mit rundem Spezial-Cursor</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "San Francisco", Arial, sans-serif;
+      background: #111;
+      color: #eee;
+      line-height: 1.5;
+      cursor: none;
+    }
+    a {
+      color: #ccc;
+      text-decoration: none;
+      cursor: none;
+    }
+    a:hover {
+      color: #aaa;
+      text-decoration: underline;
+    }
+    button, input, textarea, select {
+      cursor: none;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      background: rgba(17, 17, 17, 0.95);
+      height: 48px;
+      display: flex;
+      align-items: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.7);
+      z-index: 1000;
+      padding: 0 20px;
+    }
+
+    .logo {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+    }
+    .logo svg {
+      height: 28px;
+      width: auto;
+      fill: #0a84ff;
+    }
+
+    nav {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 30px;
+      margin: 0;
+      padding: 0;
+      font-size: 14px;
+    }
+    nav a {
+      display: block;
+      padding: 6px 4px;
+      color: #ccc;
+      transition: color 0.3s, transform 0.2s;
+      white-space: nowrap;
+    }
+    nav a:hover,
+    nav a:focus {
+      color: #aaa;
+      transform: translateY(-2px);
+    }
+
+    /* Aktuelle Seite anzeigen */
+    .page-indicator {
+      margin-left: auto;
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.4);
+      text-transform: uppercase;
+      padding: 4px 10px;
+      letter-spacing: 1px;
+      user-select: none;
+    }
+
+    .hero-image {
+      width: 100%;
+      height: 900px;
+      background: url('https://picsum.photos/1600/600?grayscale&blur=3') center center / cover no-repeat;
+    }
+
+    .banner {
+      max-width: 1650px;
+      margin: 90px auto 60px;
+      display: flex;
+      justify-content: center;
+      gap: 90px;
+      color: #fff;
+    }
+    .banner .item {
+      width: 230px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .banner .number {
+      font-size: 5.25rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1;
+    }
+    .banner .label {
+      margin-top: 12px;
+      font-size: 1.875rem;
+      color: #ccc;
+      max-width: 230px;
+      white-space: normal;
+    }
+
+    footer {
+      background: #111;
+      color: #888;
+      font-size: 14px;
+      padding: 40px 20px;
+      text-align: center;
+      border-top: 1px solid #222;
+    }
+    footer .footer-links {
+      margin-bottom: 12px;
+    }
+    footer .footer-links a {
+      margin: 0 12px;
+      color: #888;
+      cursor: none;
+    }
+    footer .footer-links a:hover {
+      color: #aaa;
+      text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+      nav ul {
+        gap: 16px;
+        font-size: 13px;
+      }
+      .hero-image {
+        height: 250px;
+      }
+      .banner {
+        flex-direction: column;
+        gap: 60px;
+        margin: 60px 20px;
+      }
+      .banner .item {
+        width: 100%;
+        max-width: 300px;
+        margin: 0 auto;
+      }
+      .banner .label {
+        max-width: 100%;
+        font-size: 1.5rem;
+      }
+    }
+
+    #custom-cursor {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 35px;
+      height: 35px;
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid white;
+      border-radius: 50%;
+      color: white;
+      font-size: 6px;
+      font-weight: 100;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      user-select: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      white-space: nowrap;
+      line-height: 1.1;
+    }
+    #custom-cursor span {
+      line-height: 1.1;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="index.html" class="logo" aria-label="Firmenlogo">
+  <img src="img/logo.png.png" alt="Firmenlogo" style="height:28px;" />
+</a>
+
+  <nav>
+    <ul>
+      <li><a href="projekte.html">Unsere Projekte</a></li>
+      <li><a href="leistungen.html">Unsere Leistungen</a></li>
+      <li><a href="ueberuns.html">Über uns</a></li>
+      <li><a href="kontakt.html">Kontakt</a></li>
+    </ul>
+  </nav>
+  <div class="page-indicator" id="page-indicator"></div>
+</header>
+
+<div class="hero-image" role="img" aria-label="Hero Bild"></div>
+
+<main>
+  <!-- Platz für späteren Content -->
+</main>
+
+<section class="banner" aria-label="Firmenzahlen Banner">
+  <div class="item">
+    <div class="number" data-target="100">0</div>
+    <div class="label">Prozent<br>Kundenzufriedenheit</div>
+  </div>
+  <div class="item">
+    <div class="number" data-target="9">0</div>
+    <div class="label">Jahre<br>Branchenerfahrung</div>
+  </div>
+  <div class="item">
+    <div class="number" data-target="67">0</div>
+    <div class="label">Abgeschlossene<br>Projekte</div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-links" role="contentinfo">
+    <a href="datenschutz.html">Datenschutz</a> | 
+    <a href="agb.html">AGB</a> | 
+    <a href="impressum.html">Impressum</a> | 
+    <a href="kontakt.html">Kontakt</a>
+  </div>
+  <div>&copy; 2025 NIVO MEDIA. Alle Rechte vorbehalten.</div>
+</footer>
+
+<!-- Spezial-Cursor -->
+<div id="custom-cursor" aria-hidden="true">
+  <span>VISIONS</span>
+  <span>WITH</span>
+  <span>HEART.</span>
+</div>
+
+<script>
+  // Zahlen Animation
+  const counters = document.querySelectorAll('.number');
+  counters.forEach(counter => {
+    const target = +counter.getAttribute('data-target');
+    let startTimestamp = null;
+    const duration = 4000;
+
+    function step(timestamp) {
+      if (!startTimestamp) startTimestamp = timestamp;
+      const progress = timestamp - startTimestamp;
+      const progressRatio = Math.min(progress / duration, 1);
+      const currentCount = Math.floor(progressRatio * target);
+      counter.innerText = currentCount;
+      if (progress < duration) {
+        requestAnimationFrame(step);
+      } else {
+        counter.innerText = target;
+      }
+    }
+
+    requestAnimationFrame(step);
+  });
+
+  // Cursor Bewegung
+  const cursor = document.getElementById('custom-cursor');
+  window.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+  });
+
+  // Aktive Seite hervorheben + anzeigen
+  document.addEventListener('DOMContentLoaded', () => {
+    const currentPage = window.location.pathname.split('/').pop();
+    const navLinks = document.querySelectorAll('nav a');
+    const indicator = document.getElementById('page-indicator');
+
+    navLinks.forEach(link => {
+      const linkPage = link.getAttribute('href').split('/').pop();
+      if (linkPage === currentPage) {
+        link.setAttribute('aria-current', 'page');
+        indicator.textContent = link.textContent;
+      } else {
+        link.removeAttribute('aria-current');
+      }
+    });
+
+    // Sonderfall für Startseite
+    if (currentPage === '' || currentPage === 'index.html') {
+      indicator.textContent = 'Startseite';
+    }
+  });
+</script>
+
+</body>
+</html>
