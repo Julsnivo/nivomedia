@@ -39,13 +39,10 @@
       box-shadow: 0 2px 5px rgba(0,0,0,0.7);
       z-index: 1000;
       padding: 0 20px;
-      justify-content: flex-start;
     }
 
     .logo {
       flex-shrink: 0;
-      display: flex;
-      align-items: center;
     }
     .logo img {
       height: 28px;
@@ -156,17 +153,12 @@
     .mobile-menu {
       display: none;
       position: fixed;
-      top: 0;
+      top: 48px; /* direkt unter Header */
       left: 0;
-      right: 0;
-      background: #111;
       width: 100%;
-      height: auto;
-      padding: 80px 20px 20px;
-      z-index: 9998;
-    }
-    .mobile-menu.show {
-      display: block;
+      background: #111;
+      padding: 20px;
+      z-index: 9999;
     }
     .mobile-menu ul {
       list-style: none;
@@ -179,6 +171,10 @@
     .mobile-menu a {
       color: #eee;
       font-size: 20px;
+      text-decoration: none;
+    }
+    .mobile-menu a:hover {
+      color: #aaa;
     }
 
     @media (max-width: 768px) {
@@ -186,17 +182,17 @@
         display: none;
       }
 
-      /* Logo zentriert, Hamburger rechts */
       header {
         justify-content: center;
         position: relative;
-        padding: 0 20px;
       }
+      /* Logo mittig und absolut positioniert */
       .logo {
         position: absolute;
         left: 50%;
         transform: translateX(-50%);
       }
+      /* Hamburger rechts absolut positioniert */
       .hamburger {
         display: block;
         position: absolute;
@@ -280,11 +276,11 @@
     </ul>
   </nav>
 
-  <div class="hamburger" id="hamburger" aria-label="Menü öffnen/schließen" tabindex="0">☰</div>
+  <div class="hamburger" id="hamburger" aria-label="Menü öffnen" tabindex="0">☰</div>
   <div class="page-indicator" id="page-indicator"></div>
 </header>
 
-<div class="mobile-menu" id="mobile-menu">
+<div class="mobile-menu" id="mobile-menu" aria-hidden="true">
   <ul>
     <li><a href="projekte.html">Unsere Projekte</a></li>
     <li><a href="leistungen.html">Unsere Leistungen</a></li>
@@ -387,20 +383,16 @@
   const mobileMenu = document.getElementById('mobile-menu');
 
   hamburger.addEventListener('click', () => {
-    // Toggle display zwischen none und block
-    if (mobileMenu.style.display === 'block') {
-      mobileMenu.style.display = 'none';
-      hamburger.setAttribute('aria-label', 'Menü öffnen');
-    } else {
-      mobileMenu.style.display = 'block';
-      hamburger.setAttribute('aria-label', 'Menü schließen');
-    }
+    const isOpen = mobileMenu.classList.toggle('show');
+    mobileMenu.setAttribute('aria-hidden', !isOpen);
+    hamburger.setAttribute('aria-label', isOpen ? 'Menü schließen' : 'Menü öffnen');
   });
 
-  // Optional: Menü schließen, wenn Link im Mobile Menü angeklickt wird
+  // Menü schließen, wenn ein Link im mobilen Menü angeklickt wird
   mobileMenu.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', () => {
-      mobileMenu.style.display = 'none';
+      mobileMenu.classList.remove('show');
+      mobileMenu.setAttribute('aria-hidden', true);
       hamburger.setAttribute('aria-label', 'Menü öffnen');
     });
   });
@@ -408,4 +400,3 @@
 
 </body>
 </html>
-
