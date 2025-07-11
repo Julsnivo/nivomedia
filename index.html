@@ -163,6 +163,9 @@
       padding: 80px 20px 20px;
       z-index: 9998;
     }
+    .mobile-menu.open {
+      display: block;
+    }
     .mobile-menu ul {
       list-style: none;
       padding: 0;
@@ -181,20 +184,21 @@
         display: none;
       }
 
+      /* Mobile Header: logo und hamburger tauschen + logo zentrieren */
       header {
+        justify-content: center;
         position: relative;
-        justify-content: flex-end; /* Hamburger rechts */
-        padding: 0 20px;
+        padding: 0;
       }
-
       .logo {
         position: absolute;
         left: 50%;
         transform: translateX(-50%);
       }
-
       .hamburger {
         display: block;
+        position: absolute;
+        right: 20px;
         margin-left: 0;
       }
 
@@ -376,12 +380,12 @@
     }
   });
 
-  // Hamburger-Menü
+  // Hamburger-Menü mit toggle-Klasse
   const hamburger = document.getElementById('hamburger');
   const mobileMenu = document.getElementById('mobile-menu');
 
   hamburger.addEventListener('click', () => {
-    mobileMenu.style.display = mobileMenu.style.display === 'block' ? 'none' : 'block';
+    mobileMenu.classList.toggle('open');
   });
 </script>
 
