@@ -299,29 +299,6 @@
   <span>HEART.</span>
 </div>
 
-<script>
-  // Zahlen Animation
-  const counters = document.querySelectorAll('.number');
-  counters.forEach(counter => {
-    const target = +counter.getAttribute('data-target');
-    let startTimestamp = null;
-    const duration = 4000;
-
-    function step(timestamp) {
-      if (!startTimestamp) startTimestamp = timestamp;
-      const progress = timestamp - startTimestamp;
-      const progressRatio = Math.min(progress / duration, 1);
-      const currentCount = Math.floor(progressRatio * target);
-      counter.innerText = currentCount;
-      if (progress < duration) {
-        requestAnimationFrame(step);
-      } else {
-        counter.innerText = target;
-      }
-    }
-
-    requestAnimationFrame(step);
-  });
 
   // Cursor Bewegung
   const cursor = document.getElementById('custom-cursor');
