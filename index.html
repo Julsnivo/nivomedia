@@ -39,6 +39,7 @@
       box-shadow: 0 2px 5px rgba(0,0,0,0.7);
       z-index: 1000;
       padding: 0 20px;
+      justify-content: flex-start;
     }
 
     .logo {
@@ -149,6 +150,7 @@
       color: #ccc;
       cursor: pointer;
       margin-left: auto;
+      user-select: none;
     }
 
     .mobile-menu {
@@ -163,7 +165,7 @@
       padding: 80px 20px 20px;
       z-index: 9998;
     }
-    .mobile-menu.open {
+    .mobile-menu.show {
       display: block;
     }
     .mobile-menu ul {
@@ -184,11 +186,11 @@
         display: none;
       }
 
-      /* Mobile Header: logo und hamburger tauschen + logo zentrieren */
+      /* Logo zentriert, Hamburger rechts */
       header {
         justify-content: center;
         position: relative;
-        padding: 0;
+        padding: 0 20px;
       }
       .logo {
         position: absolute;
@@ -278,7 +280,7 @@
     </ul>
   </nav>
 
-  <div class="hamburger" id="hamburger" aria-label="Menü öffnen" tabindex="0">☰</div>
+  <div class="hamburger" id="hamburger" aria-label="Menü öffnen/schließen" tabindex="0">☰</div>
   <div class="page-indicator" id="page-indicator"></div>
 </header>
 
@@ -380,14 +382,30 @@
     }
   });
 
-  // Hamburger-Menü mit toggle-Klasse
+  // Hamburger Menü Funktion - Menü anzeigen / verbergen
   const hamburger = document.getElementById('hamburger');
   const mobileMenu = document.getElementById('mobile-menu');
 
   hamburger.addEventListener('click', () => {
-    mobileMenu.classList.toggle('open');
+    // Toggle display zwischen none und block
+    if (mobileMenu.style.display === 'block') {
+      mobileMenu.style.display = 'none';
+      hamburger.setAttribute('aria-label', 'Menü öffnen');
+    } else {
+      mobileMenu.style.display = 'block';
+      hamburger.setAttribute('aria-label', 'Menü schließen');
+    }
+  });
+
+  // Optional: Menü schließen, wenn Link im Mobile Menü angeklickt wird
+  mobileMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      mobileMenu.style.display = 'none';
+      hamburger.setAttribute('aria-label', 'Menü öffnen');
+    });
   });
 </script>
 
 </body>
 </html>
+
