@@ -39,11 +39,10 @@
     box-shadow: 0 2px 5px rgba(0,0,0,0.7);
     z-index: 1000;
     padding: 0 20px;
+    /* Desktop: Menü links, Logo links, Seitenname rechts */
     justify-content: space-between;
-    position: relative;
   }
 
-  /* Hamburger Menu */
   #hamburger {
     display: none;
     flex-direction: column;
@@ -65,12 +64,7 @@
     outline-offset: 2px;
   }
 
-  /* Logo absolute zentriert */
   .logo {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
     height: 28px;
     display: flex;
     align-items: center;
@@ -105,7 +99,6 @@
     transform: translateY(-2px);
   }
 
-  /* Menü links, Seitenbezeichnung rechts */
   nav.menu-left {
     flex-grow: 1;
     display: flex;
@@ -192,7 +185,6 @@
     color: #555;
   }
 
-  /* Custom Cursor */
   #custom-cursor {
     position: fixed;
     top: 0;
@@ -225,24 +217,22 @@
   @media (max-width: 768px) {
     header {
       padding: 0 10px;
-    }
-    #hamburger {
-      display: flex;
-    }
-    nav.desktop-nav {
-      display: none;
-    }
-
-    /* Mobile header flex layout with hamburger left, logo centered, page indicator right */
-    header {
-      justify-content: space-between;
+      /* Wichtig: damit der Header nicht umbricht */
       position: relative;
     }
+
     #hamburger {
+      display: flex;
       order: 1;
       position: relative;
       z-index: 1100;
     }
+
+    nav.desktop-nav {
+      display: none;
+    }
+
+    /* Logo absolut mittig auf dem Bildschirm, egal ob links oder rechts mehr Platz */
     .logo {
       position: absolute;
       left: 50%;
@@ -250,6 +240,8 @@
       transform: translate(-50%, -50%);
       z-index: 1100;
     }
+
+    /* Seitenname rechts */
     .page-indicator {
       order: 3;
       flex: 0 0 auto;
@@ -345,10 +337,6 @@
     <div></div>
   </div>
 
-  <a href="index.html" class="logo" aria-label="Firmenlogo">
-    <img src="img/logo.png.png" alt="Firmenlogo" />
-  </a>
-
   <nav class="menu-left" aria-label="Hauptmenü">
     <ul>
       <li><a href="projekte.html">Unsere Projekte</a></li>
@@ -357,6 +345,10 @@
       <li><a href="kontakt.html">Kontakt</a></li>
     </ul>
   </nav>
+
+  <a href="index.html" class="logo" aria-label="Firmenlogo">
+    <img src="img/logo.png.png" alt="Firmenlogo" />
+  </a>
 
   <div class="page-indicator" id="page-indicator"></div>
 </header>
