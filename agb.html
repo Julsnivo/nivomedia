@@ -43,7 +43,6 @@
       position: relative;
     }
 
-    /* Hamburger links, Logo zentriert */
     #hamburger {
       position: absolute;
       left: 20px;
@@ -138,7 +137,6 @@
       text-decoration: underline;
     }
 
-    /* Responsive */
     @media (max-width: 768px) {
       nav {
         display: none;
@@ -247,9 +245,7 @@
 <div class="hero-image" role="img" aria-label="Hero Bild"></div>
 
 <main>
-  <!-- Hier dein Seiteninhalt -->
-  <h1>Seitentitel</h1>
-  <p>Inhalt der Unterseite hier einfügen...</p>
+  <!-- Seiteninhalt hier einfügen -->
 </main>
 
 <footer>
@@ -306,7 +302,7 @@
     mobileMenu.style.display = isOpen ? 'none' : 'block';
   });
 
-  // Schließen beim Klick auf Link
+  // Menü schließt beim Klick auf Link
   const mobileLinks = document.querySelectorAll('.mobile-menu a');
   mobileLinks.forEach(link => {
     link.addEventListener('click', () => {
@@ -317,3 +313,4 @@
 
 </body>
 </html>
+
