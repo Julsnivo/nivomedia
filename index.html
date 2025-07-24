@@ -370,6 +370,415 @@
     document.getElementById('popupForm').classList.remove('active');
   });
 
+  // Zahlen Animation<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>STARTSEITE</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "San Francisco", Arial, sans-serif;
+      background: #111;
+      color: #eee;
+      line-height: 1.5;
+      cursor: none;
+    }
+
+    a {
+      color: #ccc;
+      text-decoration: none;
+      cursor: none;
+    }
+
+    a:hover {
+      color: #aaa;
+      text-decoration: underline;
+    }
+
+    button, input, textarea, select {
+      cursor: none;
+    }
+
+    /* Header transparent */
+    header {
+      position: sticky;
+      top: 0;
+      background: transparent !important;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      z-index: 1000;
+      box-shadow: none !important;
+    }
+
+    .logo {
+      flex-shrink: 0;
+      position: relative;
+      z-index: 1002;
+    }
+
+    .logo img {
+      height: 28px;
+      display: block;
+    }
+
+    /* Hamburger Button */
+    .menu-toggle {
+      font-size: 28px;
+      background: none;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      z-index: 1003;
+      transition: opacity 0.3s ease;
+      line-height: 1;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 28px;
+    }
+
+    .menu-toggle.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* Offcanvas-Menü */
+    .offcanvas-menu {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 100%;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.97);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start; /* Links ausrichten */
+      justify-content: center;
+      padding-left: 40px; /* Abstand links */
+      transition: right 0.4s ease;
+      z-index: 1001;
+    }
+
+    /* Menü aktiv */
+    .offcanvas-menu.open {
+      right: 0;
+    }
+
+    /* Menü schließen Button */
+    .close-menu {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      font-size: 36px;
+      background: none;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      user-select: none;
+      z-index: 1004;
+    }
+
+    /* Menü Links */
+    .offcanvas-menu ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      width: 100%;
+    }
+
+    .offcanvas-menu ul li {
+      margin: 20px 0;
+      width: 100%;
+    }
+
+    .offcanvas-menu ul li a {
+      font-size: 60px;       /* Schriftgröße angepasst */
+      color: #ccc;
+      text-decoration: none;
+      transition: color 0.3s;
+      user-select: none;
+      display: block;
+      width: 100%;
+      text-align: left;     /* linksbündig */
+      padding-left: 0;
+    }
+
+    .offcanvas-menu ul li a:hover {
+      color: #fff;
+    }
+
+    /* Hero Image */
+    .hero-image {
+      width: 100%;
+      height: 100vh;
+      background: url('https://picsum.photos/1600/900?grayscale&blur=3') center center / cover no-repeat;
+    }
+
+    /* Banner für Firmenzahlen */
+    .banner {
+      max-width: 1650px;
+      margin: 60px auto 60px;
+      display: flex;
+      justify-content: center;
+      gap: 90px;
+      color: #fff;
+    }
+
+    .banner .item {
+      width: 230px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .banner .number {
+      font-size: 5.25rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1;
+    }
+
+    .banner .label {
+      margin-top: 12px;
+      font-size: 1.875rem;
+      color: #ccc;
+      max-width: 230px;
+      white-space: normal;
+    }
+
+    footer {
+      background: #111;
+      color: #888;
+      font-size: 14px;
+      padding: 40px 20px;
+      text-align: center;
+      border-top: 1px solid #222;
+    }
+
+    footer .footer-links {
+      margin-bottom: 30px;
+    }
+
+    footer .footer-links a {
+      margin: 0 12px;
+      color: #888;
+      cursor: none;
+    }
+
+    footer .footer-links a:hover {
+      color: #aaa;
+      text-decoration: underline;
+    }
+
+    /* Pop-Up (Kontaktformular) von rechts */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      right: -800px;
+      width: 700px;
+      height: auto;
+      background-color: rgba(50, 50, 50, 0.9);
+      z-index: 9999;
+      transition: right 0.3s ease-in-out;
+      padding: 30px;
+      color: #eee;
+      border-radius: 10px;
+    }
+
+    .popup.active {
+      right: 20px;
+    }
+
+    .popup form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .popup input,
+    .popup textarea {
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      background-color: #333;
+      color: #eee;
+      font-size: 16px;
+    }
+
+    .popup button {
+      padding: 12px;
+      border: 1px solid #fff;
+      background-color: #333;
+      color: #fff;
+      cursor: pointer;
+      border-radius: 5px;
+      font-size: 16px;
+      transition: background-color 0.3s;
+    }
+
+    .popup button:hover {
+      background-color: #000;
+    }
+
+    .popup .close-btn {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      font-size: 24px;
+      color: #fff;
+      cursor: pointer;
+      border: none;
+      background: none;
+    }
+
+    #custom-cursor {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 35px;
+      height: 35px;
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid white;
+      border-radius: 50%;
+      color: white;
+      font-size: 6px;
+      font-weight: 100;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      user-select: none;
+      z-index: 99999;
+      transform: translate(-50%, -50%);
+      white-space: nowrap;
+      line-height: 1.1;
+    }
+
+    #custom-cursor span {
+      line-height: 1.1;
+    }
+
+    #openPopupBtn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      padding: 16px 32px;
+      background-color: #333;
+      color: #fff;
+      border: 1px solid #fff;
+      border-radius: 5px;
+      font-size: 22px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      z-index: 9998;
+    }
+
+    #openPopupBtn:hover {
+      background-color: #000;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="index.html" class="logo" aria-label="Firmenlogo">
+    <img src="img/logo.png.png" alt="Firmenlogo" />
+  </a>
+
+  <!-- Hamburger Icon -->
+  <button class="menu-toggle" id="menuToggle" aria-label="Menü öffnen">
+    &#9776;
+  </button>
+</header>
+
+<!-- Off-Canvas Menü -->
+<nav id="mobileMenu" class="offcanvas-menu" aria-hidden="true">
+  <button class="close-menu" id="closeMenu" aria-label="Menü schließen">&times;</button>
+  <ul>
+    <li><a href="projekte.html">Unsere Projekte</a></li>
+    <li><a href="leistungen.html">Unsere Leistungen</a></li>
+    <li><a href="ueberuns.html">Über uns</a></li>
+    <li><a href="kontakt.html">Kontakt</a></li>
+  </ul>
+</nav>
+
+<div class="hero-image" role="img" aria-label="Hero Bild"></div>
+
+<main>
+  <!-- Platz für späteren Content -->
+</main>
+
+<section class="banner" aria-label="Firmenzahlen Banner">
+  <div class="item">
+    <div class="number" data-target="100">0</div>
+    <div class="label">Prozent zufriedene<br>Kunden</div>
+  </div>
+  <div class="item">
+    <div class="number" data-target="9">0</div>
+    <div class="label">Jahre<br>Branchenerfahrung</div>
+  </div>
+  <div class="item">
+    <div class="number" data-target="67">0</div>
+    <div class="label">abgeschlossene Projekte in 2024</div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-links">
+    <a href="#">Impressum</a> | <a href="#">Datenschutz</a> | <a href="#">AGB</a> | <a href="#">Kontakt</a>
+
+  </div>
+  <div>&copy; 2025 NIVO MEDIA. Alle Rechte vorbehalten.</div>
+</footer>
+
+<div id="popupForm" class="popup">
+  <button class="close-btn" id="closePopupBtn">&times;</button>
+  <form>
+    <h2>Let's start our journey!</h2>
+    <label for="name">Dein Name:</label>
+    <input type="text" id="name" required />
+    <label for="email">Deine Email:</label>
+    <input type="email" id="email" required />
+    <label for="project">Bei welchem Projekt dürfen wir dich unterstützen?</label>
+    <textarea id="project" rows="4" required></textarea>
+    <div>Mit Absenden des Formulars erklärst du dich mit unseren <a href="#">Datenschutzrichtlinien</a> einverstanden.</div>
+    <button type="submit">Absenden</button>
+  </form>
+</div>
+
+<button id="openPopupBtn">Lets start our Journey!</button>
+
+<div id="custom-cursor" aria-hidden="true">
+  <span>VISIONS</span>
+  <span>WITH</span>
+  <span>HEART.</span>
+</div>
+
+<script>
+  // Pop-Up öffnen
+  document.getElementById('openPopupBtn').addEventListener('click', () => {
+    document.getElementById('popupForm').classList.add('active');
+  });
+
+  // Pop-Up schließen
+  document.getElementById('closePopupBtn').addEventListener('click', () => {
+    document.getElementById('popupForm').classList.remove('active');
+  });
+
   // Zahlen Animation
   const counters = document.querySelectorAll('.number');
   counters.forEach(counter => {
@@ -399,9 +808,35 @@
     cursor.style.left = e.clientX + 'px';
     cursor.style.top = e.clientY + 'px';
   });
+
+  // Hamburger Menü öffnen/schließen
+  const menuToggle = document.getElementById('menuToggle');
+  const closeMenu = document.getElementById('closeMenu');
+  const mobileMenu = document.getElementById('mobileMenu');
+
+  menuToggle.addEventListener('click', () => {
+    mobileMenu.classList.add('open');
+    mobileMenu.setAttribute('aria-hidden', 'false');
+    menuToggle.classList.add('hidden');
+  });
+
+  closeMenu.addEventListener('click', () => {
+    mobileMenu.classList.remove('open');
+    mobileMenu.setAttribute('aria-hidden', 'true');
+    menuToggle.classList.remove('hidden');
+  });
+
+  window.addEventListener('click', (e) => {
+    if (mobileMenu.classList.contains('open') &&
+        !mobileMenu.contains(e.target) &&
+        e.target !== menuToggle) {
+      mobileMenu.classList.remove('open');
+      mobileMenu.setAttribute('aria-hidden', 'true');
+      menuToggle.classList.remove('hidden');
+    }
+  });
 </script>
 
 </body>
 </html>
-
 
